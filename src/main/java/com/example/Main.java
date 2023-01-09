@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.test.MessagePrinter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
