@@ -1,24 +1,25 @@
 package com.example;
 
-import com.example.test.MessageProducer;
 import org.springframework.stereotype.Service;
+import com.example.test.MessageProducer;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.function.Function;
 
 @Service
 public class MessagePrinter {
 
-    private final List<MessageProducer> messageProducers;
+    private final MessageProducer messageProducer;
+    private final MessagePrinterConfig printerConfig;
 
-    public MessagePrinter(List<MessageProducer> messageProducers) {
-        this.messageProducers = messageProducers;
+    public MessagePrinter(MessageProducer messageProducer, MessagePrinterConfig printerConfig) {
+        this.messageProducer = messageProducer;
+        this.printerConfig = printerConfig;
     }
 
     public void printMessage() {
-        for (MessageProducer messageProducer : messageProducers) {
-            String message = messageProducer.getMessage();
-            System.out.println(message + LocalDateTime.now());
-        }
+        String message = messageProducer.getMessage();
+        Function<String, String> decorator = printerConfig.getDecorator();
+        String decoratedMessage = decorator.apply(message);
+        System.out.println(decoratedMessage);
     }
 }
